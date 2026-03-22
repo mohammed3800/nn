@@ -157,7 +157,16 @@ def home():
             car_lots.append(data)
                 
 
-    return f'{car_lots[1]}'
+    return f'{car_lots}'
+
+@app.route('/history' , methods=['GET']    )
+def cool():
+
+    url2 = (f"https://car-link.tools/search?page=7&size=10&site=2")
+    url2 = requests.get(url2)
+    history_lot = []
+
+
 
 if __name__ == '__main__':
     app.run(debug=True)
