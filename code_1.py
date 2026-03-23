@@ -15,6 +15,7 @@ def home():
     cc = src.decode('utf-8')
     items = BeautifulSoup(cc).find_all("script")
     num = len(items)
+    cc=[]
     
     for i in range(num):
         car_detal = items[i].text
@@ -153,13 +154,12 @@ def home():
             updated_at = updated_at.split(",")[0]
             data = {"id":id1,"lot_id":lot_id,"site":site,"base_site":base_site,"salvage_id":salvage_id,"odometer":odometer,"current_bid":current_bid,"price_new":price_new,"price_future":price_future,"price_reserve":price_reserve,"auction_date":auction_date,"cost_priced":cost_priced,"cost_repair":cost_repair,"year":year,"cylinders":cylinders,"state":state,"vehicle_type":vehicle_type,"auction_type":auction_type,"make":make,"model":model,"series":series,"damage_pr":damage_pr,"damage_sec":damage_sec,"keys":keys,"odobrand":odobrand,"drive":drive,"fuel":fuel,"transmission":transmission,"color":color,"status":status,"presale_status":presale_status,"title":title,"vin":vin,"engine":engine,"engine_size":engine_size,"location":location,"country":country,"document":document,"currency":currency,"is_buynow":is_buynow,"iaai_360":iaai_360,"copart_exterior_360":copart_exterior_360,
                     "copart_interior_360":copart_interior_360, "video":video, "link_img_hd ":link_img_hd, "link_img_small ":link_img_small, "is_offsite ":is_offsite, "location_offsite ":location_offsite, "link ":link, "body_type ":body_type, "seller_type ":seller_type, "vehicle_score ":vehicle_score, "created_at ":created_at, "updated_at ":updated_at}
-            data = json.dumps(data, indent=4)
             car_lots.append(data)
                 
 
-    return f'{car_lots}'
+    return jsonify(car_lots)
 
-@app.route('/history' , methods=['GET']    )
+@app.route('/history' , methods=['GET'] )
 def cool():
 
     url2 = (f"https://car-link.tools/search?page=7&size=10&site=2")
