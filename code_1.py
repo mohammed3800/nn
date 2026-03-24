@@ -8,20 +8,20 @@ app = Flask(__name__)
 @app.route('/' , methods=['GET']    )
 def home():
     #url1 = request.args.get('url1')
-    page = request.args.get('page')
-    make= request.args.get('make')
-    site = request.args.get('site')
-    model = request.args.get('model')
-    buy_now = request.args.get('buy_now')
-    transmission = request.args.get('transmission')
-    fuel = request.args.get('fuel')
-    status = request.args.get('status')
-    drive = request.args.get('drive')
-    damage_pr = request.args.get('damage_pr')
-    document = request.args.get('document')
-    engine = request.args.get('engine')
-    year = request.args.get('year')
-    odometer= request.args.get('odometer')
+    page = request.args.get('page',"1")
+    make= request.args.get('make',"")
+    site = request.args.get('site',"")
+    model = request.args.get('model',"")
+    buy_now = request.args.get('buy_now',"")
+    transmission = request.args.get('transmission',"")
+    fuel = request.args.get('fuel',"")
+    status = request.args.get('status',"")
+    drive = request.args.get('drive',"")
+    damage_pr = request.args.get('damage_pr',"")
+    document = request.args.get('document',"")
+    engine = request.args.get('engine',"")
+    year = request.args.get('year',"")
+    odometer= request.args.get('odometer',"")
 
 
     url1 = (f"https://car-link.tools/search")
@@ -35,6 +35,313 @@ def home():
     items = BeautifulSoup(cc).find_all("script")
     num = len(items)
     cc=[]
+    
+    for i in range(num):
+        car_detal = items[i].text
+        if "content_item__qId8i" in car_detal and i > 0 and  "lot_id" in car_detal:
+            
+            item = items[i].text.replace('\\"', '')
+            if "id:" in item:
+                id1 = item.split("id:")[1]
+                id1 = id1.split(",")[0]
+            else:
+                id1 = "1"
+
+            if "lot_id:" in item:
+                lot_id = item.split("lot_id:")[1]
+                lot_id = lot_id.split(",")[0]
+            else:
+                lot_id = "1"
+
+            if "site:" in item:
+                site = item.split("site:")[1]
+                site = site.split(",")[0]
+            else:
+                site = "null"
+
+            if "base_site:" in item:
+                base_site = item.split("base_site:")[1]
+                base_site = base_site.split(",")[0]
+            else:
+                base_site = "unknown"
+
+            if "salvage_id:" in item:
+                salvage_id = item.split("salvage_id:")[1]
+                salvage_id = salvage_id.split(",")[0]
+            else:
+                salvage_id = "null"
+
+            if "odometer:" in item:
+                odometer = item.split("odometer:")[1]
+                odometer = odometer.split(",")[0]
+            else:
+                odometer = -1
+
+            if "current_bid:" in item:
+                current_bid = item.split("current_bid:")[1]
+                current_bid = current_bid.split(",")[0]
+            else:
+                current_bid = 0
+            if "price_new:" in item:
+                price_new = item.split("price_new:")[1]
+                price_new = price_new.split(",")[0]
+            else:                price_new = "-1"
+            if "price_future:" in item:
+                price_future = item.split("price_future:")[1]
+                price_future = price_future.split(",")[0]
+            else:
+                price_future = "-1"
+
+            if "price_reserve:" in item:
+                price_reserve = item.split("price_reserve:")[1]
+                price_reserve = price_reserve.split(",")[0]
+            else:
+                price_reserve = 0
+            if "auction_date:" in item:
+                auction_date = item.split("auction_date:")[1]
+                auction_date = auction_date.split(",")[0]
+            else:               
+                auction_date = "null"
+            if "cost_priced:" in item:
+                cost_priced = item.split("cost_priced:")[1]
+                cost_priced = cost_priced.split(",")[0]
+            else:
+                cost_priced = "-1"
+            if "cost_repair:" in item:
+                cost_repair = item.split("cost_repair:")[1]
+                cost_repair = cost_repair.split(",")[0]
+            else:
+                cost_repair = "null"
+            if "year:" in item:
+                year = item.split("year:")[1]
+                year = year.split(",")[0]
+            else:
+                year = "-1"
+
+            if "cylinders:" in item:
+                cylinders = item.split("cylinders:")[1]
+                cylinders = cylinders.split(",")[0]
+            else:
+                cylinders = "null"
+            
+            if "state:" in item:
+                state = item.split("state:")[1]
+                state = state.split(",")[0]
+            else:
+                state = "null"
+            if "vehicle_type:" in item:
+                vehicle_type = item.split("vehicle_type:")[1]
+                vehicle_type = vehicle_type.split(",")[0]
+            else:
+                vehicle_type = "null"
+            if "auction_type:" in item:
+                auction_type = item.split("auction_type:")[1]
+                auction_type = auction_type.split(",")[0]
+            else:
+                auction_type = "null"
+            if "make:" in item:
+                make = item.split("make:")[1]
+                make = make.split(",")[0]
+            else:
+                make = "null"
+
+            if "model:" in item:
+                model = item.split("model:")[1]
+                model = model.split(",")[0]
+            else:
+                model = "null"
+            if "series:" in item:
+                 series = item.split("series:")[1]
+                 series = series.split(",")[0]
+            else:
+                series = "null"
+            if "damage_pr:" in item:
+                damage_pr = item.split("damage_pr:")[1]
+                damage_pr = damage_pr.split(",")[0]
+            else:
+                damage_pr = "null"
+            if "damage_sec:" in item:
+                damage_sec = item.split("damage_sec:")[1]
+                damage_sec = damage_sec.split(",")[0]
+            else:                damage_sec = "null"
+            if "keys:" in item:
+                keys = item.split("keys:")[1]
+                keys = keys.split(",")[0]
+            else:
+                keys = "null"
+
+            if "odobrand:" in item:
+                odobrand = item.split("odobrand:")[1]
+                odobrand = odobrand.split(",")[0]
+            else:
+                odobrand = "0"
+
+            if "drive:" in item:
+                drive = item.split("drive:")[1]
+                drive = drive.split(",")[0]
+            else:
+                drive = "null"
+
+            if "fuel:" in item:
+                fuel = item.split("fuel:")[1]
+                fuel = fuel.split(",")[0]
+            else:
+                fuel = "null"
+            if "transmission:" in item:
+                transmission = item.split("transmission:")[1]
+                transmission = transmission.split(",")[0]
+            else:
+                transmission = "null"
+            if "color:" in item:
+                color = item.split("color:")[1]
+                color = color.split(",")[0]
+            else:
+                color = "null"
+            if "status:" in item:
+                status = item.split("status:")[1]
+                status = status.split(",")[0]
+            else:
+                status = "null"
+            if "presale_status:" in item:
+                presale_status = item.split("presale_status:")[1]
+                presale_status = presale_status.split(",")[0]
+            else:
+                presale_status = "null"
+            if "title:" in item:
+                title = item.split("title:")[1]
+                title = title.split(",")[0]
+            else:
+                title = "null"
+            if "vin:" in item:
+                vin = item.split("vin:")[1]
+                vin = vin.split(",")[0]
+            else:
+                vin = "null"
+            if "engine:" in item:
+                engine = item.split("engine:")[1]
+                engine = engine.split(",")[0]
+            else:
+                engine = "null"
+            if "engine_size:" in item:
+                engine_size = item.split("engine_size:")[1]
+                engine_size = engine_size.split(",")[0]
+            else:
+                engine_size = "null"
+            if "location:" in item:
+                location = item.split("location:")[1]
+                location = location.split(",")[0]
+            else:
+                location = "null"
+            if "country:" in item:
+                country = item.split("country:")[1]
+                country = country.split(",")[0]
+            else:
+                country = "null"
+            if "document:" in item:
+                document = item.split("document:")[1]
+                document = document.split(",")[0]
+            else:
+                document = "null"
+            if "currency:" in item:
+                currency = item.split("currency:")[1]
+                currency = currency.split(",")[0]
+            else:
+                currency = "null"
+            if "is_buynow:" in item:
+                is_buynow = item.split("is_buynow:")[1]
+                is_buynow = is_buynow.split(",")[0]
+            else:
+                is_buynow = "null"
+            if "iaai_360:" in item:
+                iaai_360 = item.split("iaai_360:")[1]
+                iaai_360 = iaai_360.split(",")[0]
+            else:
+                iaai_360 = "null"
+            if "copart_exterior_360:" in item:
+                copart_exterior_360 = item.split("copart_exterior_360:")[1]
+                copart_exterior_360 = copart_exterior_360.split(",")[0]
+            else:
+                copart_exterior_360 = "null"
+            if "copart_interior_360:" in item:
+                copart_interior_360 = item.split("copart_interior_360:")[1]
+                copart_interior_360 = copart_interior_360.split(",")[0]
+            else:
+                copart_interior_360 = "null"
+            if "video:" in item:
+                video = item.split("video:")[1]
+                video = video.split(",")[0]
+            else:
+                video = "null"
+            if "link_img_hd:" in item:
+                link_img_hd = item.split("link_img_hd:[")[1]
+                link_img_hd = link_img_hd.split(",")
+                del link_img_hd[len(link_img_hd)-1]
+            else:
+                link_img_hd = "null"
+            if "link_img_small:" in item:
+                link_img_small = item.split("link_img_small:[")[1]
+                link_img_small = link_img_small.split(",")
+                del link_img_small[len(link_img_small)-1]
+            else:
+                link_img_small = "null"
+            if "is_offsite:" in item:
+                is_offsite = item.split("is_offsite:")[1]
+                is_offsite = is_offsite.split(",")[0]
+            else:
+                is_offsite = "null"
+            if "location_offsite:" in item:
+                location_offsite = item.split("location_offsite:")[1]
+                location_offsite = location_offsite.split(",")[0]
+            else:
+                location_offsite = "null"
+            if "link:" in item:
+                link = item.split("link:")[1]
+                link = link.split(",")[0]
+            else:
+                link = "null"
+            if "body_type:" in item:
+                body_type = item.split("body_type:")[1]
+                body_type = body_type.split(",")[0]
+            else:
+                body_type = "null"
+            if "seller_type:" in item:
+                seller_type = item.split("seller_type:")[1]
+                seller_type = seller_type.split(",")[0]
+            else:
+                seller_type = "null"
+            if "vehicle_score:" in item:
+                vehicle_score = item.split("vehicle_score:")[1]
+                vehicle_score = vehicle_score.split(",")[0]
+            else:
+                vehicle_score = "null"
+            if "created_at:" in item:
+                created_at = item.split("created_at:")[1]
+                created_at = created_at.split("created_at:")[0]
+            else:
+                created_at = "null"
+            if "updated_at:" in item:
+                updated_at = item.split("updated_at:")[1]
+                updated_at = updated_at.split(",")[0]
+            else:
+                updated_at = "null"
+            data = {"id":id1,"lot_id":lot_id,"site":site,"base_site":base_site,"salvage_id":salvage_id,"odometer":odometer,"current_bid":current_bid,"price_new":price_new,"price_future":price_future,"price_reserve":price_reserve,"auction_date":auction_date,"cost_priced":cost_priced,"cost_repair":cost_repair,"year":year,"cylinders":cylinders,"state":state,"vehicle_type":vehicle_type,"auction_type":auction_type,"make":make,"model":model,"series":series,"damage_pr":damage_pr,"damage_sec":damage_sec,"keys":keys,"odobrand":odobrand,"drive":drive,"fuel":fuel,"transmission":transmission,"color":color,"status":status,"presale_status":presale_status,"title":title,"vin":vin,"engine":engine,"engine_size":engine_size,"location":location,"country":country,"document":document,"currency":currency,"is_buynow":is_buynow,"iaai_360":iaai_360,"copart_exterior_360":copart_exterior_360,
+                    "copart_interior_360":copart_interior_360, "video":video, "link_img_hd ":link_img_hd, "link_img_small ":link_img_small, "is_offsite ":is_offsite, "location_offsite ":location_offsite, "link ":link, "body_type ":body_type, "seller_type ":seller_type, "vehicle_score ":vehicle_score, "created_at ":created_at, "updated_at ":updated_at}
+            car_lots.append(data)
+                
+
+    return jsonify(car_lots)
+
+@app.route('/history' , methods=['GET'] )
+def cool():
+
+    url2 = (f"https://car-link.tools/search?page=7&size=10&site=2")
+    url2 = requests.get(url2)
+    history_lot = []
+
+
+
+if __name__ == '__main__':
+    app.run(debug=True)    cc=[]
     
     for i in range(num):
         car_detal = items[i].text
