@@ -34,7 +34,7 @@ def home():
     cc = src.decode('utf-8')
     items = BeautifulSoup(cc).find_all("script")
     num = len(items)
-    cc=[]
+    
     
     for i in range(num):
         car_detal = items[i].text
