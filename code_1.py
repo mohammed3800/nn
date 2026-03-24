@@ -40,7 +40,7 @@ def home():
         car_detal = items[i].text
         if "content_item__qId8i" in car_detal and i > 0 and  "lot_id" in car_detal:
             
-            item =items[i].text.replace(R"\"", "")
+            item = items[i].text.replace('\\"', '')
             id1 = item.split('data:{id:')[1]
             id1 = id1.split(",lot_id:")[0]
             lot_id = item.split("lot_id:")[1]
